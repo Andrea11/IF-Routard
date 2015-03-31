@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file://servif-home/Profil$/aaccardo/Bureau/IF-Routard-B3230/src/ifroutard/model/Client.java</file>
+            <file>file://servif-home/Profil$/aaccardo/Bureau/IF-Routard-B3230/src/ifroutard/dao/ClientDaoJpa.java</file>
+            <file>file://servif-home/Profil$/aaccardo/Bureau/IF-Routard-B3230/src/ifroutard/dao/jpa/ClientDao.java</file>
+            <file>file://servif-home/Profil$/aaccardo/Bureau/IF-Routard-B3230/src/ifroutard/service/Creer.java</file>
+            <file>file://servif-home/Profil$/aaccardo/Bureau/IF-Routard-B3230/src/ifroutard/dao/jpa/TemplateDao.java</file>
+            <file>file://servif-home/Profil$/aaccardo/Bureau/IF-Routard-B3230/src/ifroutard/dao/jpa/ConseillerDao.java</file>
+        </group>
+    </open-files>
+</project-private>
