@@ -6,15 +6,19 @@
 package ifroutard.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
  *
  * @author aaccardo
  */
+@Entity
+@Table(name = "PAYS")
 public class Pays {
 
     @Id
@@ -24,14 +28,14 @@ public class Pays {
     @Version
     private int version;
 
-    private String namePays;
+    private String nomPays;
 
     @Column(nullable = false, unique = true)
     private String codePays;
 
     private String capital;
 
-    private String languages;
+    private String language;
 
     private long nbInhabitants;
 
@@ -52,9 +56,9 @@ public class Pays {
      */
     public Pays(String codePays, String namePays, String capital) {
         this.codePays = codePays;
-        this.namePays = namePays;
+        this.nomPays = namePays;
         this.capital = capital;
-        this.languages = null;
+        this.language = null;
         this.nbInhabitants = 0;
         this.surface = 0;
     }
@@ -63,35 +67,42 @@ public class Pays {
      * Complete constructor
      *
      * @param codePays The country code
-     * @param namePays The country name
+     * @param nomPays The country name
      * @param capital The country capital
-     * @param languages The languages spoken as a String
+     * @param languages The language spoken as a String
      * @param nbInhabitants The country number of inhabitants
      * @param surface The surface in square km
      */
-    public Pays(String codePays, String namePays, String capital, String languages,
+    public Pays(String codePays, String nomPays, String capital, String languages,
             long nbInhabitants, long surface) {
         this.codePays = codePays;
-        this.namePays = namePays;
+        this.nomPays = nomPays;
         this.capital = capital;
-        this.languages = languages;
+        this.language = languages;
         this.nbInhabitants = nbInhabitants;
         this.surface = surface;
     }
 
+    public void update(Pays p) {
+        this.codePays = p.codePays;
+        this.nomPays = p.nomPays;
+        this.capital = p.capital;
+        this.language = p.language;
+        this.nbInhabitants = p.nbInhabitants;
+        this.surface = p.surface;
+    }
+
     @Override
     public String toString() {
-        return "Pays{" + "namePays=" + namePays + ", codePays=" + codePays + ", capital=" + capital + ", languages=" + languages + ", nbInhabitants=" + nbInhabitants + ", surface=" + surface + '}';
+        return "Pays{" + "namePays=" + nomPays + ", codePays=" + codePays + ", capital=" + capital + ", languages=" + language + ", nbInhabitants=" + nbInhabitants + ", surface=" + surface + '}';
     }
-    
-    
 
     public int getVersion() {
         return version;
     }
 
     public String getNamePays() {
-        return namePays;
+        return nomPays;
     }
 
     public String getCodePays() {
@@ -103,7 +114,7 @@ public class Pays {
     }
 
     public String getLanguages() {
-        return languages;
+        return language;
     }
 
     public long getNbInhabitants() {
@@ -125,7 +136,7 @@ public class Pays {
     }
 
     public void setLanguages(String languages) {
-        this.languages = languages;
+        this.language = languages;
         this.version++;
     }
 

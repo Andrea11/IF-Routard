@@ -2,7 +2,14 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="IF-Routard-B3230PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>ifroutard.model.Conseiller</class>
     <class>ifroutard.model.Client</class>
+    <class>ifroutard.model.Depart</class>
+    <class>ifroutard.model.Pays</class>
+    <class>ifroutard.model.Circuit</class>
+    <class>ifroutard.model.Sejour</class>
+    <class>ifroutard.model.Voyage</class>
+    <class>ifroutard.model.Devis</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/B3230-DB"/>
       <property name="javax.persistence.jdbc.password" value="B3230"/>

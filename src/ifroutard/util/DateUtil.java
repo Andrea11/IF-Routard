@@ -15,7 +15,19 @@ import java.util.Date;
  */
 public class DateUtil {
 
-    public static java.util.Date toDate(String str) {
+    public static Date toTime(String str) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM HH:mm");
+
+        try {
+            java.util.Date date = formatter.parse(str);
+            return date;
+
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+public static Date toDate(String str) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
@@ -26,10 +38,15 @@ public class DateUtil {
             return null;
         }
     }
-    
-    public static String Display(Date date)
-    {
+
+    public static String displayDate(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(date);
+
+    }
+
+    public static String displayTime(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm");
         return dateFormat.format(date);
 
     }

@@ -1,6 +1,6 @@
 package ifroutard.dao;
 
-import ifroutard.util.JpaUtil;
+import ifroutard.util.jpaUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -8,37 +8,42 @@ import java.util.List;
 
 /**
  * DAO generale
- * @author Maria Baboulall & Robin Ricard
+ * @author aaccardo
  */
 public abstract class Template {
     
     /**
-     * Persiste un modele dans la base de donnees
-     * @param entity L'entite JPA a enregistrer
+     * Persiste un modèle dans la base de donnees
+     * @param entity L'entite JPA à sauvegarder
+     * @return Verifie bien que l'entité a bien été persistée
      */
     public static boolean persiste(Object entity) {
-        EntityManager em = JpaUtil.getEntityManager();
+        jpaUtil.startTransiction();
+        EntityManager em = jpaUtil.getEntityManager();
         em.persist(entity);
+        jpaUtil.commitTransiction();
         return true;
     }
 
     /**
-     * Persiste une mise a jour de modele dans la base de donnees
-     * @param entity L'entite JPA a mettre a jour
+     * Met à jour un modèle dans la base de donnees
+     * @param entity L'entite JPA a mettre à jour
+     * @return Verifie bien que l'entité a bien été persistée
      */
-    public static boolean miseAJour(Object entity) {
-        EntityManager em = JpaUtil.getEntityManager();
+    public static boolean update(Object entity) {
+        EntityManager em = jpaUtil.getEntityManager();
         em.merge(entity);
         return true;
     }
     
     /**
-     * Retrouve un element stocke a partir de sa cle primaire
+     * Retrouve un element stocké a partir de sa cle primaire
+     * @param type Le type d'objet qu'on recherche
      * @param id La cle primaire de l'element
      * @return L'element stocke a la cle primaire
      */
-    protected static Object trouveId(Class type, long id) {
-        EntityManager em = JpaUtil.getEntityManager();
+    protected static Object findById(Class type, long id) {
+        EntityManager em = jpaUtil.getEntityManager();
         return em.find(type, id);
     }
     
@@ -46,13 +51,19 @@ public abstract class Template {
      * Supprime un objet de la base
      * @param o L'objet a supprimer
      */
-    public static void supprime(Object o) {
-        EntityManager em = JpaUtil.getEntityManager();
+    public static void delete(Object o) {
+        EntityManager em = jpaUtil.getEntityManager();
         em.remove(o);
     }
 
-    protected static List tous(String entityName) {
-        EntityManager em = JpaUtil.getEntityManager();
+    /**
+     * Affiche la liste complète de tout l'entités
+     * @param entityName le type d'entité qu'on veut afficher
+     * @return Une liste contenent tous les entités entityName
+     */
+    
+    protected static List all(String entityName) {
+        EntityManager em = jpaUtil.getEntityManager();
         Query q = em.createQuery("select e from " + entityName + " e");
         return q.getResultList();
     }

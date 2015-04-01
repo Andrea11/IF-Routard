@@ -5,11 +5,16 @@
  */
 package ifroutard.model;
 
+import ifroutard.util.DateUtil;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import javax.persistence.Version;
 
@@ -17,6 +22,8 @@ import javax.persistence.Version;
  *
  * @author aaccardo
  */
+@Entity
+@Table(name = "DEPARTS")
 public class Depart {
 
     @Id
@@ -29,8 +36,10 @@ public class Depart {
     @Column(nullable = false, unique = true)
     private String codeDepart;
 
+    @Temporal(TemporalType.DATE)
     private Date dateDepart;
 
+    @Temporal(TemporalType.DATE)
     private Date dateArrivee;
 
     private String lieuDepart;
@@ -40,7 +49,7 @@ public class Depart {
     private int prix; //prix en euros
 
     private String description;
-    
+
     private String moyenTransport;
 
     /**
@@ -50,42 +59,54 @@ public class Depart {
     }
 
     /**
-     *  Small constructor
-     * 
+     * Small constructor
+     *
      * @param codeDepart
      * @param dateDepart
      * @param dateArrivee
      * @param lieuDepart
      * @param lieuArrivee
      */
-    public Depart(String codeDepart, Date dateDepart, Date dateArrivee, String lieuDepart, String lieuArrivee) {
+    public Depart(String codeDepart, String dateDepart, String dateArrivee, String lieuDepart, String lieuArrivee) {
         this.codeDepart = codeDepart;
-        this.dateDepart = dateDepart;
-        this.dateArrivee = dateArrivee;
+        this.dateDepart = DateUtil.toTime(dateDepart);
+        this.dateArrivee = DateUtil.toTime(dateArrivee);
         this.lieuDepart = lieuDepart;
         this.lieuArrivee = lieuArrivee;
     }
+
     /**
-     *  Complete constructor
-     * 
+     * Complete constructor
+     *
      * @param codeDepart
      * @param dateDepart
      * @param dateArrivee
      * @param lieuDepart
      * @param lieuArrivee
      * @param prix
-     * @param description 
+     * @param description
      * @param moyenTransport
      */
-    public Depart(String codeDepart, Date dateDepart, Date dateArrivee, String lieuDepart, String lieuArrivee, int prix, String description, String moyenTransport) {
+    public Depart(String codeDepart, String dateDepart, String dateArrivee, String lieuDepart, String lieuArrivee, int prix, String description, String moyenTransport) {
         this.codeDepart = codeDepart;
-        this.dateDepart = dateDepart;
-        this.dateArrivee = dateArrivee;
+        this.dateDepart = DateUtil.toTime(dateDepart);
+        this.dateArrivee = DateUtil.toTime(dateArrivee);
         this.lieuDepart = lieuDepart;
         this.lieuArrivee = lieuArrivee;
         this.prix = prix;
         this.description = description;
         this.moyenTransport = moyenTransport;
+    }
+
+    public void update(Depart d) {
+        this.codeDepart = d.codeDepart;
+        this.dateDepart = d.dateDepart;
+        this.dateArrivee = d.dateArrivee;
+        this.lieuDepart = d.lieuDepart;
+        this.lieuArrivee = d.lieuArrivee;
+        this.prix = d.prix;
+        this.description = d.description;
+        this.moyenTransport = d.moyenTransport;
     }
 
     public String getMoyenTransport() {
@@ -166,6 +187,10 @@ public class Depart {
     public void setMoyenTransport(String moyenTransport) {
         this.moyenTransport = moyenTransport;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Depart{" + "codeDepart=" + codeDepart + ", dateDepart=" + DateUtil.displayTime(dateDepart) + ", dateArrivee=" + DateUtil.displayTime(dateArrivee) + ", lieuDepart=" + lieuDepart + ", lieuArrivee=" + lieuArrivee + ", prix=" + prix + ", description=" + description + ", moyenTransport=" + moyenTransport + '}';
+    }
 
 }

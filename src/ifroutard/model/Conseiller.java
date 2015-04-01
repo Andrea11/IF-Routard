@@ -5,17 +5,23 @@
  */
 package ifroutard.model;
 
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author aaccardo
  */
-
+@Entity
+@Table(name = "CONSEILLERS")
 public class Conseiller {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
@@ -25,13 +31,35 @@ public class Conseiller {
 
     private String prenom;
 
-    @Column(unique=true)
-    private String eMail;
+    @Column(unique = true)
+    private String email;
 
-    public Conseiller(String nom, String prenom, String eMail) {
+    @Column(unique = true)
+    private String username;
+
+    private String password;
+
+    @OneToMany
+    private List<Client> myClients;
+
+    public Conseiller(String nom, String prenom, String email, String username, String password) {
         this.nom = nom;
         this.prenom = prenom;
-        this.eMail = eMail;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
+
+    public Conseiller() {
+
+    }
+
+    public void update(Conseiller c) {
+        this.nom = c.nom;
+        this.prenom = c.prenom;
+        this.email = c.email;
+        this.username = c.username;
+        this.password = c.password;
     }
 
     public Integer getId() {
@@ -46,8 +74,12 @@ public class Conseiller {
         return prenom;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setNom(String nom) {
@@ -58,14 +90,21 @@ public class Conseiller {
         this.prenom = prenom;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
-        return "Conseiller{" + "nom=" + nom + ", prenom=" + prenom + ", eMail=" + eMail + '}';
+        return "Conseiller{" + "nom=" + nom + ", prenom=" + prenom + ", email=" + email + '}';
     }
-    
-    
+
 }

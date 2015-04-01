@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,7 +27,7 @@ import javax.persistence.TemporalType;
  *   {"M.", "BORROTI MATIAS DANTAS", "Raphaël", "1976-07-10", "70 rue des Coquelicots, Villeneuve-d'Ascq", "0328178508", "rborrotimatiasdantas4171@free.fr"}
  */
 @Entity
-@Table(name = "CLIENTS") //, uniqueConstraints = @UniqueConstraint(columnNames = {"email", }))
+@Table(name = "CLIENTS")
 public class Client {
 
     @Id
@@ -50,7 +51,7 @@ public class Client {
     private String telephone;
 
     @Column(nullable = false, unique = true)
-    private String eMail;
+    private String email;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -58,32 +59,35 @@ public class Client {
     @Column(nullable = false)
     private String password;
 
+    @ManyToOne
+    private Conseiller myConseiller;
+    
     public Client() {
     }
 
-    public Client(String nom, String prenom, String eMail, String username, String password) {
+    public Client(String nom, String prenom, String email, String username, String password) {
         this.civilite = null;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = null;
         this.adressePostale = null;
         this.telephone = null;        
-        this.eMail = eMail;
+        this.email = email;
         this.username = username;
         this.password = password;
     }
 
     
     
-    public Client(String civilite, String nom, String prenom, String dateNaissance, String adressePostale, String telephone, String eMail, String username, String password) {
+    public Client(String civilite, String nom, String prenom, String dateNaissance, String adressePostale, String telephone, String email, String password) {
         this.civilite = civilite;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = DateUtil.toDate(dateNaissance);
         this.adressePostale = adressePostale;
         this.telephone = telephone;
-        this.eMail = eMail;
-        this.username = username;
+        this.email = email;
+        this.username = email;
         this.password = password;
     }
 
@@ -94,7 +98,7 @@ public class Client {
         this.dateNaissance = c.dateNaissance;
         this.adressePostale = c.adressePostale;
         this.telephone = c.telephone;
-        this.eMail = c.eMail;
+        this.email = c.email;
         this.username = c.username;
         this.password = c.password;
     }
@@ -123,8 +127,8 @@ public class Client {
         return telephone;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
     public Integer getId() {
@@ -163,8 +167,8 @@ public class Client {
         this.telephone = telephone;
     }
 
-    public void setEMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setUsername(String username) {
@@ -177,7 +181,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" + "civilite=" + civilite + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + DateUtil.Display(dateNaissance) + ", adressePostale=" + adressePostale + ", telephone=" + telephone + ", eMail=" + eMail + ", username=" + username + ", password=" + password + '}';
+        return "Client{" + "civilite=" + civilite + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + DateUtil.displayDate(dateNaissance) + ", adressePostale=" + adressePostale + ", telephone=" + telephone + ", email=" + email + ", username=" + username + ", password=" + password + '}';
     }
 
     

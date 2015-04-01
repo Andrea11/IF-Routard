@@ -5,6 +5,7 @@
  */
 package ifroutard.model;
 
+import java.util.List;
 import javax.persistence.Entity;
 
 /**
@@ -45,8 +46,8 @@ public class Circuit extends Voyage {
      * @param pays Le pays sur lequel porte le voyage
      */
     public Circuit(String code, String nom, int dureeJour, String description,
-            int distanceKm, String transport, String gamme, Pays pays) {
-        super(code, description, dureeJour, nom, gamme);
+            int distanceKm, String transport, String gamme, List<Depart> departs, List<Pays> pays) {
+        super(code, description, dureeJour, nom, gamme, departs, pays);
         this.distanceKm = distanceKm;
         this.transport = transport;
     }
@@ -66,4 +67,11 @@ public class Circuit extends Voyage {
     public void setTransport(String transport) {
         this.transport = transport;
     }
+
+    @Override
+    public String toString() {
+        return (Voyage.class).toString() + "Circuit{" + "distanceKm=" + distanceKm + ", transport=" + transport + '}';
+    }
+    
+    
 }

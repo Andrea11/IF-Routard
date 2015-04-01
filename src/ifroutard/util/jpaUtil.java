@@ -5,7 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class JpaUtil {
+public class jpaUtil {
 
 	private static final String PERSISTENCE_UNIT_NAME = "IF-Routard-B3230PU";
 
@@ -13,21 +13,21 @@ public class JpaUtil {
 
 	private static EntityManagerFactory factory;
 
-	private JpaUtil() {
+	private jpaUtil() {
 	}
 
 	public static boolean isEntityManagerOpen(){
-		return JpaUtil.manager.get() != null && JpaUtil.manager.get().isOpen();
+		return jpaUtil.manager.get() != null && jpaUtil.manager.get().isOpen();
 	}
 	
 	public static EntityManager getEntityManager() {
-		if (JpaUtil.factory == null) {
-			JpaUtil.factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		if (jpaUtil.factory == null) {
+			jpaUtil.factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		}
-		EntityManager em = JpaUtil.manager.get();
+		EntityManager em = jpaUtil.manager.get();
 		if (em == null || !em.isOpen()) {
-			em = JpaUtil.factory.createEntityManager();
-			JpaUtil.manager.set(em);
+			em = jpaUtil.factory.createEntityManager();
+			jpaUtil.manager.set(em);
 		}
 		return em;
 	}
@@ -49,19 +49,19 @@ public class JpaUtil {
         }
 
 	public static void closeEntityManager() {
-		EntityManager em = JpaUtil.manager.get();
+		EntityManager em = jpaUtil.manager.get();
 		if (em != null) {
 			EntityTransaction tx = em.getTransaction();
 			if (tx.isActive()) { 
 				tx.commit();
 			}
 			em.close();
-			JpaUtil.manager.set(null);
+			jpaUtil.manager.set(null);
 		}
 	}
 	
 	public static void closeEntityManagerFactory(){
 		closeEntityManager();
-		JpaUtil.factory.close();
+		jpaUtil.factory.close();
 	}
 }

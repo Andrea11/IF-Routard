@@ -5,6 +5,7 @@
  */
 package ifroutard.model;
 
+import java.util.List;
 import javax.persistence.Entity;
 
 /**
@@ -44,8 +45,8 @@ public class Sejour extends Voyage {
      * @param pays Le pays sur lequel porte le voyage
      */
     public Sejour(String code, String nom, int dureeJour, String description,
-            String residence, String gamme, Pays pays) {
-        super(code, description, dureeJour, nom, gamme);
+            String residence, String gamme, List<Depart> departs, List<Pays> pays) {
+        super(code, description, dureeJour, nom, gamme, departs, pays);
         this.residence = residence;
     }
 

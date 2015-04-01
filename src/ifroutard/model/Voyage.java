@@ -8,7 +8,9 @@ package ifroutard.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +26,7 @@ import javax.persistence.Version;
  * @author aaccardo
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "VOYAGE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Voyage implements Serializable {
 
     @Id
@@ -40,18 +41,21 @@ public abstract class Voyage implements Serializable {
 
     private String description;
 
-    private Integer duree; //en jour
+    private int duree; //en jour
 
     private String nom;
 
     private String gamme;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.PERSIST)
     private List<Pays> pays;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.PERSIST)
     private List<Depart> departs;
 
+    /**
+     * @deprecated
+     */
     public Voyage() {
         this.departs = new ArrayList<>(); // Empty
 
@@ -76,15 +80,25 @@ public abstract class Voyage implements Serializable {
 
     }
 
-    public Voyage(String code, String description, Integer duree, String nom, String gamme) {
+    public Voyage(String code, String description, Integer duree, String nom, String gamme, List<Depart> departs, List<Pays> pays) {
         this.code = code;
         this.description = description;
         this.duree = duree;
         this.nom = nom;
         this.gamme = gamme;
-        this.departs = new ArrayList<>(); // Empty
-        this.pays = new ArrayList<>(); // Empty
+        this.departs = departs; // Empty
+        this.pays = pays; // Empty
 
+    }
+
+    public void update(Voyage v) {
+        this.code = v.code;
+        this.description = v.description;
+        this.duree = v.duree;
+        this.nom = v.nom;
+        this.gamme = v.gamme;
+        this.departs = v.departs;
+        this.pays = v.pays;
     }
 
     public int getVersion() {
@@ -156,5 +170,12 @@ public abstract class Voyage implements Serializable {
     public void ajoutPays(Pays pays) {
         this.pays.add(pays);
     }
+
+    @Override
+    public String toString() {
+        return "Voyage{" + "code=" + code + ", description=" + description + ", duree=" + duree + ", nom=" + nom + ", gamme=" + gamme + ", pays=" + pays + ", departs=" + departs + '}';
+    }
+    
+    
 
 }

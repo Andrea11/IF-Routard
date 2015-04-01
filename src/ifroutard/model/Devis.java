@@ -6,10 +6,13 @@
 package ifroutard.model;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -20,8 +23,9 @@ import javax.persistence.UniqueConstraint;
  *
  * @author aaccardo
  */
-@Table(name = "DEVIS", uniqueConstraints=
-           @UniqueConstraint(columnNames = {"VOYAGE", "CONSEILLER", "CLIENT", "DATEDEPART"})) 
+@Entity
+@Table(name = "DEVIS", uniqueConstraints
+        = @UniqueConstraint(columnNames = {"VOYAGE", "CONSEILLER", "CLIENT", "DATEDEPART"}))
 public class Devis {
 
     @Id
@@ -29,31 +33,45 @@ public class Devis {
     @Column(name = "ID")
     private Integer id;
 
-    @ManyToOne
-    @Column(name = "VOYAGE", nullable = false)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "VOYAGE", nullable = false)
     private Voyage voyage;
 
-    @ManyToOne
-    @Column(name = "CONSEILLER", nullable = false)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "CONSEILLER", nullable = false)
     private Conseiller conseiller;
 
-    @ManyToOne
-    @Column(name = "CLIENT", nullable = false)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "CLIENT", nullable = false)
     private Client client;
 
-    @Column(name = "DATEDEPART", length = 30, nullable = false)
+    @Column(name = "DATEDEPART", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dateDepart;
 
-    @Column(name = "PRIX", length = 30, nullable = false)
-    private String prix;
+    @Column(name = "PRIX", nullable = false)
+    private int prix;
 
-    public Devis(Voyage voyage, Conseiller conseiller, Client client, Date dateDepart, String prix) {
+    public Devis(Voyage voyage, Conseiller conseiller, Client client, Date dateDepart, int prix) {
         this.voyage = voyage;
         this.conseiller = conseiller;
         this.client = client;
         this.dateDepart = dateDepart;
         this.prix = prix;
+    }
+
+    /**
+     * Empty constructor, <strong>only used for persistence</strong>
+     */
+    public Devis() {
+    }
+
+    public void update(Devis d) {
+        this.voyage = d.voyage;
+        this.conseiller = d.conseiller;
+        this.client = d.client;
+        this.dateDepart = d.dateDepart;
+        this.prix = d.prix;
     }
 
     public Voyage getVoyage() {
@@ -76,7 +94,7 @@ public class Devis {
         return dateDepart;
     }
 
-    public String getPrix() {
+    public int getPrix() {
         return prix;
     }
 
@@ -96,7 +114,7 @@ public class Devis {
         this.dateDepart = dateDepart;
     }
 
-    public void setPrix(String prix) {
+    public void setPrix(int prix) {
         this.prix = prix;
     }
 
